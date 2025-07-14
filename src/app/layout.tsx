@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { CartProvider } from "@/components/CartContext";
+import QueryProvider from "../components/QueryProvider";
+import Providers from "./providers";
+import { WishlistProvider } from "@/components/WishlistContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,8 +26,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={geistSans.className}>
-        <Navbar />
-        <main className="container mx-auto px-4 py-8">{children}</main>
+        <Providers>
+          <QueryProvider>
+            <WishlistProvider>
+              <CartProvider>
+                <Navbar />
+                <main className="container mx-auto px-4 py-8">{children}</main>
+                <Footer />
+              </CartProvider>
+            </WishlistProvider>
+          </QueryProvider>
+        </Providers>
       </body>
     </html>
   );
